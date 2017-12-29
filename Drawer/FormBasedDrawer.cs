@@ -18,13 +18,12 @@ namespace SimpleCrossHair
         {
             Settings.Default.PropertyChanged += OnPropertyChanged;
 
-            AddPropertyHandler(OpacityPropertyName,
-                 () => Form.Opacity = SettingsUtil.GetValue<int>(OpacityPropertyName) / 100.0);
-
+            AddPropertyHandler(OpacityPropertyName, RefreshOpacity);
             AddPropertyHandler(ColorPropertyName, RefreshColor);
 
             RefreshRegion();
             RefreshColor();
+            RefreshOpacity();
 
             OnInitialized();
         }
@@ -32,6 +31,11 @@ namespace SimpleCrossHair
         private void RefreshColor()
         {
             Form.BackColor = Color.FromArgb(SettingsUtil.GetValue<int>(ColorPropertyName));
+        }
+
+        private void RefreshOpacity()
+        {
+            Form.Opacity = SettingsUtil.GetValue<int>(OpacityPropertyName) / 100.0;
         }
 
         protected virtual void OnInitialized()
